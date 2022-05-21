@@ -1,7 +1,84 @@
-#game div {
-    border: 1px solid black;
-    width: 15%;
-    height: 200px;
-    margin: 10px;
-    display: inline-block;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  background: linear-gradient(90deg, rgba(121,9,27,0.9822303921568627) 16%, rgba(9,9,121,1) 66%, rgba(255,148,58,1) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+h1 {
+  color: rgb(247,245,251);
+}
+
+#choose-board{
+  margin: 1rem;
+}
+
+.gameBoard{
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  perspective: 1000px;
+}
+
+.sixteen {
+  display: grid;
+  grid-template-columns: repeat(4, 3rem);
+  grid-template-columns: repeat(4, 3rem);
+  gap: 2rem;
+}
+
+.thirty-six {
+  display: grid;
+  grid-template-columns: repeat(6, 3rem);
+  grid-template-columns: repeat(6, 3rem);
+  gap: 2rem;
+}
+
+.sixty-four {
+  display: grid;
+  grid-template-columns: repeat(8, 3rem);
+  grid-template-columns: repeat(8, 3rem);
+  gap: 2rem;
+}
+
+.hundred {
+  display: grid;
+  grid-template-columns: repeat(10, 3rem);
+  grid-template-columns: repeat(10, 3rem);
+  gap: 2rem;
+}
+
+.card {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: all 2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.front, .back {
+  height: 100%;
+  width: 100%;
+}
+
+.front {
+  position: relative;
+  transform: rotateY(180deg);
+}
+
+.back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgb(144,156,194);
+  backface-visibility: hidden;
+}
+
+.card-flip {
+  transform: rotateY(180deg);
+}

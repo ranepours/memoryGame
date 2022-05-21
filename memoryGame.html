@@ -5,12 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory Game</title>
-    <link rel="stylesheet" href="memoryGame.css">
+    <link href="memoryGame.css" rel="stylesheet">
 </head>
-<body>
+<body class="background">
     <h1>Memory Game</h1>
-    <div id="game"></div>
+    <form id="choose-board">
+        <label for="choose-board"></label>
+        <button id="4x4">4 x 4</button>
+        <button id="6x6">6 x 6</button>
+        <button id="8x8">8 x 8</button>
+        <button id="10x10">10 x 10</button>
+    </form>
 
+    <div id="gameBoard">
+        <!-- this should change each time a button is clicked to have the appropriate grid; also button clicks should not stack on tiop of one another... but that's the case for rn and idk how to fix it at the moment :/ -->
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="memoryGame.js"></script>
 </body>
 </html>

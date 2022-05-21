@@ -1,0 +1,66 @@
+fourByFour.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log(getCards(8));
+        return getCards(8);
+        //call create card func here?
+    });
+    sixBySix.addEventListener('click', (e) => {
+        e.preventDefault();
+        return getCards(18);
+    });
+    eightByEight.addEventListener('click', (e) => {
+        e.preventDefault();
+        return getCards(36);
+    });
+    tenByTen.addEventListener('click', (e) => {
+        e.preventDefault();
+        return getCards(50);
+    });
+    //if nothing selected, set default of 4x4
+    return getCards();
+
+const makeCards = () => {
+    const cardShit = numOfCards();
+    cardShit.forEach((selection) => {
+        console.log(selection);
+        const card = document.createElement('div');
+        const front = document.createElement('img');
+        const back = document.createElement('div');
+        card.classList = "card";
+        front.classList = "front";
+        front.src = selection.imgSrc;
+        back.classList = "back";
+        gameBoard.appendChild(card);
+        card.appendChild(front);
+        card.appendChild(back);
+    })
+}
+
+makeCards();
+
+chooseBoard.addEventListener('click', (e) => {
+    e.preventDefault();
+    const sixteen = e.target.classList.add('sixteen');
+    const thirtysix = e.target.classList.add('thirty-six');
+    const sixtyfour = e.target.classList.add('sixty-four');
+    const hundred = e.target.classList.add('hundred');
+    if (e.target.id === '4x4'){
+        console.log(createCards(8));
+        sixteen;
+        createCards(2);
+    } else if (e.target.id === '6x6'){
+        thirtysix;
+    } else if (e.target.id === '8x8'){
+        sixtyfour;
+    } else {
+        hundred;
+    }
+})
+     
+    TO DO LIST STILL:
+	have a func, makeCards, which accepts no parameters; based on click events in previous function - we will make THAT many cards x2, this will update each time a board selection button is clicked in browser
+	must have a class for each board which will create either a 4x4, 6x6, 8x8, or 10x10 game board based on the button that was clicked
+	create a class called flip card that is applied when card is clicked (listen for click event on card, if clicked flip and remain, allow two cards to be selected at one time
+	if matched, let the cards stay facing upwards and update score (should decrease based on amount of matches found and how many there are left)
+	else if not a match, remain for 1 sec before flipping both cards back down
+	**implement function that keeps track of time and displays user time & best time scores based on who has played the game
