@@ -126,6 +126,46 @@ const createCards = (num) => {
     } endGame();
 }
 
+//game end?
+const endGame = () => {
+    let moreCardStuff = getCards();
+    let cardFaces = document.querySelectorAll('.front');
+    let cardBacks = document.querySelectorAll('.back');
+    moreCardStuff.forEach(())
+}
+
+//give up button should end game => prompt a "nice try" alert then clear board
+const giveUp = document.querySelector("#end-game");
+giveUp.addEventListener('click', (e) => {
+    e.preventDefault();
+    alert("You're bad at this...")
+    location.reload();
+})
+
+//flips cards back down and sets attempts to 0 => page should look how it does after board size is selected
+const reset = document.querySelector("#reset");
+reset.addEventListener('click', () => {
+    //alert("And you were doing so... well");
+    const card = document.querySelectorAll(".card")
+    if (card.classList === "card-flip"){
+        card.classList.remove("card-flip");
+        if (gameBoard.classList === "sixteen"){
+            createCards(8);
+        } else if (gameBoard.classList === "thirty-six"){
+            createCards(36);
+        } else if (gameBoard.classList === "sixty-four"){
+            createCards(64);
+        } else if (gameBoard.classList === "hundred"){
+            createCards(100);
+        }
+        matchAttempts = 0;
+        attempts.textContent = matchAttempts;
+    } else {
+        matchAttempts = 0;
+        attempts.textContent = matchAttempts;
+    }
+})
+
 //board size based on button click - should be a square always ***figure out how to get ONLY that board to show, another click shouldn't add more cards to board 11:34 15MAY
 chooseBoard.addEventListener('click', (e) => {
     e.preventDefault();
@@ -155,37 +195,5 @@ chooseBoard.addEventListener('click', (e) => {
         createCards(50);
     }
 }, {once : true })
-
-//end game - no avenger
-const endGame = () => {
-    const gameBoard = document.getElementById('gameBoard');
-    //dependent on gameboard size => if 4x4 we should have 8 matches
-    const cardFlip = document.querySelectorAll('.card-flip')
-    console.log(cardFlip);
-    if (gameBoard.classList === 'sixteen'){
-        if(cardFlip.length === 16){
-            alert('all matches found!');
-        }
-    }
-    if (chooseBoard.classList === 'thirty-six'){
-        if(cardFlip.length === 36){
-            alert('all matches found!');
-        }
-    }
-    if (chooseBoard.classList === 'sixty-four'){
-        if(cardFlip.length === 64){
-            alert('all matches found!');
-        }
-    }
-    if (chooseBoard.classList === 'hundred'){
-        if(cardFlip.length === 100){
-            alert('all matches found!');
-        }
-    }
-}
-
-//give up button should end game => prompt a "nice try" alert then clear board
-
-//reset button clears game board back to how it looks when page is opened
 
 //save scores => user current & display + BEST
