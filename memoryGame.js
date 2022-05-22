@@ -57,8 +57,6 @@ const cards = [
     {imgSrc: "fotos/zaba.jpeg", name: "Zaba"}
 ];
 
-//click event to start game - necessary?? (11MAY idk yet)
-
 //create buttons choose gameBoard size
 const chooseBoard = document.getElementById('choose-board');
 const fourByFour = document.getElementById('4x4');
@@ -66,6 +64,7 @@ const sixBySix = document.getElementById('6x6');
 const eightByEight = document.getElementById('8x8');
 const tenByTen = document.getElementById('10x10');
 
+//randomize and randomize again... and a third time
 const getCards = (num) => {
     const gameCards = cards.sort(() => Math.random() - 0.5).slice(0,num);
     const gameCards2 = gameCards.sort(() => Math.random() - 0.5);
@@ -100,72 +99,6 @@ const createCards = (num) => {
     });
 }
 
-//search for matches, flip over 1sec to view - confirm or deny matches
-//////// if matched leave facing up (pop up saying "whew a match") if not flip back down
- const selected = (c) => {
-    console.log(c);
-    const clicked = c.target;
-    clicked.classList.add('flipped');
-    const flipped = document.querySelectorAll('.flipped');
-    if (flipped.length === 2){
-        if (flipped[0].getAttribute('name') === flipped[1].getAttribute('name')){
-            console.log('matched');
-            flipped.forEach(card => {
-                card.classList.remove('flipped');
-                card.style.pointerEvents = 'none'; //makes the card unclickable - BOY OH BOY DID THIS TAKE TEN YEARS
-            })
-        } else {
-            console.log('no match');
-            flipped.forEach(card => {
-                card.classList.remove('flipped');
-                setTimeout(() => card.classList.remove('card-flip'), 1750);
-            }); 
-            matchAttempts++;
-            attempts.textContent = matchAttempts;
-        }
-    } endGame();
-}
-
-//game end?
-const endGame = () => {
-    let moreCardStuff = getCards();
-    let cardFaces = document.querySelectorAll('.front');
-    let cardBacks = document.querySelectorAll('.back');
-    moreCardStuff.forEach(())
-}
-
-//give up button should end game => prompt a "nice try" alert then clear board
-const giveUp = document.querySelector("#end-game");
-giveUp.addEventListener('click', (e) => {
-    e.preventDefault();
-    alert("You're bad at this...")
-    location.reload();
-})
-
-//flips cards back down and sets attempts to 0 => page should look how it does after board size is selected
-const reset = document.querySelector("#reset");
-reset.addEventListener('click', () => {
-    //alert("And you were doing so... well");
-    const card = document.querySelectorAll(".card")
-    if (card.classList === "card-flip"){
-        card.classList.remove("card-flip");
-        if (gameBoard.classList === "sixteen"){
-            createCards(8);
-        } else if (gameBoard.classList === "thirty-six"){
-            createCards(36);
-        } else if (gameBoard.classList === "sixty-four"){
-            createCards(64);
-        } else if (gameBoard.classList === "hundred"){
-            createCards(100);
-        }
-        matchAttempts = 0;
-        attempts.textContent = matchAttempts;
-    } else {
-        matchAttempts = 0;
-        attempts.textContent = matchAttempts;
-    }
-})
-
 //board size based on button click - should be a square always ***figure out how to get ONLY that board to show, another click shouldn't add more cards to board 11:34 15MAY
 chooseBoard.addEventListener('click', (e) => {
     e.preventDefault();
@@ -196,4 +129,40 @@ chooseBoard.addEventListener('click', (e) => {
     }
 }, {once : true })
 
+//search for matches, flip over 1sec to view - confirm or deny matches
+//////// if matched leave facing up (pop up saying "whew a match") if not flip back down
+ const selected = (c) => {
+    console.log(c);
+    const clicked = c.target;
+    clicked.classList.add('flipped');
+    const flipped = document.querySelectorAll('.flipped');
+    if (flipped.length === 2){
+        if (flipped[0].getAttribute('name') === flipped[1].getAttribute('name')){
+            console.log('matched');
+            flipped.forEach(card => {
+                card.classList.remove('flipped');
+                card.style.pointerEvents = 'none'; //makes the card unclickable - BOY OH BOY DID THIS TAKE TEN YEARS
+            })
+        } else {
+            console.log('no match');
+            flipped.forEach(card => {
+                card.classList.remove('flipped');
+                setTimeout(() => card.classList.remove('card-flip'), 1750);
+            }); 
+            matchAttempts++;
+            attempts.textContent = matchAttempts;
+        }
+    }
+}
+
+//give up button should end game => prompt a "nice try" alert then clear board
+const giveUp = document.querySelector("#end-game");
+giveUp.addEventListener('click', (e) => {
+    e.preventDefault();
+    alert("You're bad at this 🙄 ...");
+    location.reload();
+})
+
 //save scores => user current & display + BEST
+
+//endGame - no avenger
