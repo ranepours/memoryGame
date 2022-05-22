@@ -1,4 +1,8 @@
 const gameBoard = document.getElementById("gameBoard");
+const attempts = document.getElementById("match-attempts");
+let matchAttempts = 0;
+
+attempts.textContent = matchAttempts;
 
 const cards = [
     {imgSrc: "fotos/aLessonInRomantics.jpeg", name: 'A Lesson In Romantics'},
@@ -74,7 +78,7 @@ const createCards = (num) => {
     const cardInfo = getCards(num);
     console.log(cardInfo);
     //need card info teehee
-    cardInfo.forEach(selection => {
+    cardInfo.forEach((selection, id) => {
         //console.log(selection);
         const card = document.createElement('div');
         const front = document.createElement('img');
@@ -86,49 +90,102 @@ const createCards = (num) => {
         gameBoard.appendChild(card);
         card.appendChild(front);
         card.appendChild(back);
+        card.setAttribute('name', selection.name);
         //card flip
-        card.addEventListener('click', () => {
+        card.addEventListener('click', (c) => {
             console.log('you clicked card');
             card.classList.toggle('card-flip');
+            selected(c);
         })
     });
+}
+
+//search for matches, flip over 1sec to view - confirm or deny matches
+//////// if matched leave facing up (pop up saying "whew a match") if not flip back down
+ const selected = (c) => {
+    console.log(c);
+    const clicked = c.target;
+    clicked.classList.add('flipped');
+    const flipped = document.querySelectorAll('.flipped');
+    if (flipped.length === 2){
+        if (flipped[0].getAttribute('name') === flipped[1].getAttribute('name')){
+            console.log('matched');
+            flipped.forEach(card => {
+                card.classList.remove('flipped');
+                card.style.pointerEvents = 'none'; //makes the card unclickable - BOY OH BOY DID THIS TAKE TEN YEARS
+            })
+        } else {
+            console.log('no match');
+            flipped.forEach(card => {
+                card.classList.remove('flipped');
+                setTimeout(() => card.classList.remove('card-flip'), 1750);
+            }); 
+            matchAttempts++;
+            attempts.textContent = matchAttempts;
+        }
+    } endGame();
 }
 
 //board size based on button click - should be a square always ***figure out how to get ONLY that board to show, another click shouldn't add more cards to board 11:34 15MAY
 chooseBoard.addEventListener('click', (e) => {
     e.preventDefault();
-
     if (e.target === fourByFour){
-        console.log('4x4');
         gameBoard.classList.add('sixteen');
         gameBoard.classList.remove('thirty-six');
         gameBoard.classList.remove('sixty-four');
         gameBoard.classList.remove('hundred');
         createCards(8);
     } else if (e.target === sixBySix){
-      //  console.log('6x6');
         gameBoard.classList.remove('sixteen');
         gameBoard.classList.add('thirty-six');
         gameBoard.classList.remove('sixty-four');
         gameBoard.classList.remove('hundred');
         createCards(18);
     } else if (e.target === eightByEight){
-        console.log('8x8');
         gameBoard.classList.remove('sixteen');
         gameBoard.classList.remove('thirty-six');
         gameBoard.classList.add('sixty-four');
         gameBoard.classList.remove('hundred');
         createCards(32);
     } else if (e.target === tenByTen){
-        console.log('10x10');
         gameBoard.classList.remove('sixteen');
         gameBoard.classList.remove('thirty-six');
         gameBoard.classList.remove('sixty-four');
         gameBoard.classList.add('hundred');
         createCards(50);
     }
-})
-//search for matches, flip over 1sec to view - confirm or deny matches
-    //if matched leave facing up (pop up saying "whew a match") if not flip back down
+}, {once : true })
+
+//end game - no avenger
+const endGame = () => {
+    const gameBoard = document.getElementById('gameBoard');
+    //dependent on gameboard size => if 4x4 we should have 8 matches
+    const cardFlip = document.querySelectorAll('.card-flip')
+    console.log(cardFlip);
+    if (gameBoard.classList === 'sixteen'){
+        if(cardFlip.length === 16){
+            alert('all matches found!');
+        }
+    }
+    if (chooseBoard.classList === 'thirty-six'){
+        if(cardFlip.length === 36){
+            alert('all matches found!');
+        }
+    }
+    if (chooseBoard.classList === 'sixty-four'){
+        if(cardFlip.length === 64){
+            alert('all matches found!');
+        }
+    }
+    if (chooseBoard.classList === 'hundred'){
+        if(cardFlip.length === 100){
+            alert('all matches found!');
+        }
+    }
+}
+
+//give up button should end game => prompt a "nice try" alert then clear board
+
+//reset button clears game board back to how it looks when page is opened
 
 //save scores => user current & display + BEST

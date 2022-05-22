@@ -12,8 +12,8 @@ body{
   flex-direction: column;
 }
 
-h1 {
-  color: rgb(247,245,251);
+h1, span {
+  color: rgb(57,115,103);
 }
 
 #choose-board{
@@ -59,11 +59,13 @@ h1 {
   position: relative;
   transform-style: preserve-3d;
   transition: all 2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: rgba(0,0,0,0.2) 0px 5px 15px;
 }
 
 .front, .back {
   height: 100%;
   width: 100%;
+  pointer-events: none;
 }
 
 .front {
@@ -75,10 +77,55 @@ h1 {
   position: absolute;
   top: 0;
   left: 0;
-  background: rgb(144,156,194);
+  background: rgb(57,115,103);
   backface-visibility: hidden;
 }
 
 .card-flip {
   transform: rotateY(180deg);
+}
+
+/* extra stuff, like a cool button */
+#game-buttons {
+  margin-top: 4.5rem;
+}
+button {
+  animation: button 5s infinite linear;
+  position: relative;
+
+  display: inline-block;
+  padding: 0.35em 1.2em;
+  border: 0.1em solid #FFF;
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 0.12em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: 'Roboto',sans-serif;
+  font-weight: 300;
+  color: #FFFFFF;
+  background-color: rgb(37,68,65);
+  text-align: center;
+  transition: all 0.2s;
+}
+
+button:hover{
+  color: rgb(57,115,103);
+  background-color: #FFF;
+}
+
+@keyframes button {
+  0%{top:0em}
+  40%{top:0em}
+  43%{top:-0.9em}
+  46%{top:0em}
+  48%{top:-0.4em}
+  50%{top:0em}
+  100%{top:0em;}
+}
+
+@media all and (max-width:30em){
+  button{
+    display: block;
+    margin: 0.4em auto;
+  }
 }
