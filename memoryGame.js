@@ -1,7 +1,7 @@
 const gameBoard = document.getElementById("gameBoard");
+
 const attempts = document.getElementById("match-attempts");
 let matchAttempts = 0;
-
 attempts.textContent = matchAttempts;
 
 const cards = [
@@ -56,7 +56,6 @@ const cards = [
     {imgSrc: "fotos/YHLQMDLG.png", name: "YHLQMDLG"},
     {imgSrc: "fotos/zaba.jpeg", name: "Zaba"}
 ];
-
 //create buttons choose gameBoard size
 const chooseBoard = document.getElementById('choose-board');
 const fourByFour = document.getElementById('4x4');
@@ -77,7 +76,7 @@ const createCards = (num) => {
     const cardInfo = getCards(num);
     console.log(cardInfo);
     //need card info teehee
-    cardInfo.forEach((selection, id) => {
+    cardInfo.forEach((selection) => {
         //console.log(selection);
         const card = document.createElement('div');
         const front = document.createElement('img');
@@ -99,6 +98,8 @@ const createCards = (num) => {
     });
 }
 
+let cardsOnBoard = document.querySelectorAll('.card').length;
+
 //board size based on button click - should be a square always ***figure out how to get ONLY that board to show, another click shouldn't add more cards to board 11:34 15MAY
 chooseBoard.addEventListener('click', (e) => {
     e.preventDefault();
@@ -108,6 +109,7 @@ chooseBoard.addEventListener('click', (e) => {
         gameBoard.classList.remove('sixty-four');
         gameBoard.classList.remove('hundred');
         createCards(8);
+        cardsOnBoard = 16;
     } else if (e.target === sixBySix){
         gameBoard.classList.remove('sixteen');
         gameBoard.classList.add('thirty-six');
@@ -136,22 +138,31 @@ chooseBoard.addEventListener('click', (e) => {
     const clicked = c.target;
     clicked.classList.add('flipped');
     const flipped = document.querySelectorAll('.flipped');
+
+    const stuck = document.querySelectorAll('.stuck');
+
     if (flipped.length === 2){
         if (flipped[0].getAttribute('name') === flipped[1].getAttribute('name')){
             console.log('matched');
             flipped.forEach(card => {
                 card.classList.remove('flipped');
                 card.style.pointerEvents = 'none'; //makes the card unclickable - BOY OH BOY DID THIS TAKE TEN YEARS
+                card.classList.add('stuck');
             })
         } else {
             console.log('no match');
             flipped.forEach(card => {
                 card.classList.remove('flipped');
-                setTimeout(() => card.classList.remove('card-flip'), 1750);
+                setTimeout(() => {card.classList.remove('card-flip')}, 1150);
             }); 
             matchAttempts++;
             attempts.textContent = matchAttempts;
         }
+    };
+
+    if (stuck.length == cardsOnBoard){
+        console.log(cardsOnBoard);
+        alert('bro pls');
     }
 }
 
@@ -162,7 +173,3 @@ giveUp.addEventListener('click', (e) => {
     alert("You're bad at this 🙄 ...");
     location.reload();
 })
-
-//save scores => user current & display + BEST
-
-//endGame - no avenger
