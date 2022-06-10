@@ -58,10 +58,10 @@ const cards = [
 ];
 //create buttons choose gameBoard size
 const chooseBoard = document.getElementById('choose-board');
-const fourByFour = document.getElementById('4x4');
+//const fourByFour = document.getElementById('4x4');
 const sixBySix = document.getElementById('6x6');
-const eightByEight = document.getElementById('8x8');
-const tenByTen = document.getElementById('10x10');
+//const eightByEight = document.getElementById('8x8');
+//const tenByTen = document.getElementById('10x10');
 
 //randomize and randomize again... and a third time
 const getCards = (num) => {
@@ -98,38 +98,12 @@ const createCards = (num) => {
     });
 }
 
-let cardsOnBoard = document.querySelectorAll('.card').length;
-
 //board size based on button click - should be a square always ***figure out how to get ONLY that board to show, another click shouldn't add more cards to board 11:34 15MAY
 chooseBoard.addEventListener('click', (e) => {
     e.preventDefault();
-    if (e.target === fourByFour){
-        gameBoard.classList.add('sixteen');
-        gameBoard.classList.remove('thirty-six');
-        gameBoard.classList.remove('sixty-four');
-        gameBoard.classList.remove('hundred');
-        createCards(8);
-        cardsOnBoard = 16;
-    } else if (e.target === sixBySix){
-        gameBoard.classList.remove('sixteen');
-        gameBoard.classList.add('thirty-six');
-        gameBoard.classList.remove('sixty-four');
-        gameBoard.classList.remove('hundred');
-        createCards(18);
-    } else if (e.target === eightByEight){
-        gameBoard.classList.remove('sixteen');
-        gameBoard.classList.remove('thirty-six');
-        gameBoard.classList.add('sixty-four');
-        gameBoard.classList.remove('hundred');
-        createCards(32);
-    } else if (e.target === tenByTen){
-        gameBoard.classList.remove('sixteen');
-        gameBoard.classList.remove('thirty-six');
-        gameBoard.classList.remove('sixty-four');
-        gameBoard.classList.add('hundred');
-        createCards(50);
-    }
-}, {once : true })
+    gameBoard.classList.add('thirty-six');
+    createCards(18);
+})
 
 //search for matches, flip over 1sec to view - confirm or deny matches
 //////// if matched leave facing up (pop up saying "whew a match") if not flip back down
@@ -139,7 +113,7 @@ chooseBoard.addEventListener('click', (e) => {
     clicked.classList.add('flipped');
     const flipped = document.querySelectorAll('.flipped');
 
-    const stuck = document.querySelectorAll('.stuck');
+    const stuck = document.querySelectorAll('.card-flip');
 
     if (flipped.length === 2){
         if (flipped[0].getAttribute('name') === flipped[1].getAttribute('name')){
@@ -147,29 +121,35 @@ chooseBoard.addEventListener('click', (e) => {
             flipped.forEach(card => {
                 card.classList.remove('flipped');
                 card.style.pointerEvents = 'none'; //makes the card unclickable - BOY OH BOY DID THIS TAKE TEN YEARS
-                card.classList.add('stuck');
+                //card.classList.add('stuck');
             })
         } else {
             console.log('no match');
             flipped.forEach(card => {
                 card.classList.remove('flipped');
-                setTimeout(() => {card.classList.remove('card-flip')}, 1150);
+                setTimeout(() => {card.classList.remove('card-flip')}, 1050);
             }); 
             matchAttempts++;
             attempts.textContent = matchAttempts;
         }
     };
-
-    if (stuck.length == cardsOnBoard){
-        console.log(cardsOnBoard);
-        alert('bro pls');
+    endGame = () => {
+        console.log(flipped.length);
+        console.log(stuck.length);
+        if (stuck.length === 36){
+            setTimeout(() => {
+                alert(`Bet ya can't do it again 🙂 ...`);
+                location.reload();
+            }, 1100);
+        }
     }
+    endGame();
 }
 
 //give up button should end game => prompt a "nice try" alert then clear board
 const giveUp = document.querySelector("#end-game");
 giveUp.addEventListener('click', (e) => {
     e.preventDefault();
-    alert("You're bad at this 🙄 ...");
+    alert(`You're bad at this 🙄 ...`);
     location.reload();
 })

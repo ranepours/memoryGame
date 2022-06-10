@@ -64,3 +64,35 @@ chooseBoard.addEventListener('click', (e) => {
 	if matched, let the cards stay facing upwards and update score (should decrease based on amount of matches found and how many there are left)
 	else if not a match, remain for 1 sec before flipping both cards back down
 	**implement function that keeps track of time and displays user time & best time scores based on who has played the game
+
+
+10JUN => USE FOR LATER FUNCTIONALITY???
+chooseBoard.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (e.target === fourByFour){
+        gameBoard.classList.add('sixteen');
+        gameBoard.classList.remove('thirty-six');
+        gameBoard.classList.remove('sixty-four');
+        gameBoard.classList.remove('hundred');
+        createCards(8);
+        cardsOnBoard = 16;
+    } else if (e.target === sixBySix){
+        gameBoard.classList.remove('sixteen');
+        gameBoard.classList.add('thirty-six');
+        gameBoard.classList.remove('sixty-four');
+        gameBoard.classList.remove('hundred');
+        createCards(18);
+    } else if (e.target === eightByEight){
+        gameBoard.classList.remove('sixteen');
+        gameBoard.classList.remove('thirty-six');
+        gameBoard.classList.add('sixty-four');
+        gameBoard.classList.remove('hundred');
+        createCards(32);
+    } else if (e.target === tenByTen){
+        gameBoard.classList.remove('sixteen');
+        gameBoard.classList.remove('thirty-six');
+        gameBoard.classList.remove('sixty-four');
+        gameBoard.classList.add('hundred');
+        createCards(50);
+    }
+}, {once : true });
